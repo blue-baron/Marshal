@@ -1,0 +1,19 @@
+img {
+	float: left;
+	
+}
+#cards_wrapper,
+#bricks_wrapper {
+	position: relative;
+    background: rgba(233,233,233,1.00);
+	width: 80%;
+	margin: 0 auto;
+	padding: 0;
+}
+h1 {
+    clear: both;
+    width: 100%;
+}
+.card {
+    position: absolute;
+}
