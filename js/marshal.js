@@ -3,15 +3,15 @@
 
 //(function() {
  
-function MarshalGrid(container, element, formation){
+function MarshalGrid(container, element, formation, gutter){
     this.formation = formation || 'bricks';
     this.container = $(container);
     this.troops = $(element);
+    this.gutter = gutter || 0;
     this.breakpoints = [300, 500, 1000];
  }
 
 MarshalGrid.prototype.enlist = function() {
-        
     //add class to elements
     var className = this.formation;
     if (className.charAt(className.length-1) === 's') { 
@@ -111,42 +111,43 @@ MarshalGrid.prototype.cards = function(){
     this.dimensions = { cardHeights: [], topPositions: [] };    
     this.perRow();
             
-    //determine individual card width (in px)
-    this.dimensions.cardWidth = Math.floor(this.container.width() / this.elementsPerRow);
+    //determine individual card width less gutter (in px)
+    var totalGutter = this.gutter * (this.elementsPerRow - 1),
+        totalCardsWidth = this.container.width() - totalGutter;
+    this.dimensions.cardWidth = Math.floor(totalCardsWidth / this.elementsPerRow);
+    
+    //set width of cards & then get resized heights
+    //Use to position. Store column heights in array, updating with each row
+    var i;
+    for (i = 0; i < this.troops.length; i++) {
+            
+        var card = $(this.troops[i]);    
+        card.width(this.dimensions.cardWidth);
+        this.dimensions.cardHeights[i] = card.height();
         
-        //set width of cards & then get resized heights
-        //Use to position. Store column heights in array, updating with each row
-        var i;
-        for (i = 0; i < this.troops.length; i++) {
+        //postition first row jQuery position()
+        if (i < this.elementsPerRow) {
+            var leftPosition = (this.dimensions.cardWidth + this.gutter) * i;
+            card.css('top', 0);
+            card.css('left', leftPosition);
+                
+            var cardPosition = card.position();
+            this.dimensions.topPositions[i] = cardPosition.top;
+        } 
+        //position subsequent rows
+        //determine the previous card in the column and position the next card accordingly.   
+        else {
+            var prevIndex = i - this.elementsPerRow;
+            var prevCard = $(this.troops[prevIndex]);
+            var prevCardPosition = prevCard.position();
+            var thisCardTop = prevCard.height() + prevCardPosition.top + this.gutter;
+            var thisCardLeft = prevCardPosition.left;   
+        
+            card.css('top', thisCardTop);
+            card.css('left', thisCardLeft);
             
-            var card = $(this.troops[i]);    
-            card.width(this.dimensions.cardWidth);
-            this.dimensions.cardHeights[i] = card.height();
-            
-            //postition first row jQuery position()
-            if (i < this.elementsPerRow) {
-                var leftPosition = this.dimensions.cardWidth * i;
-                card.css('top', 0);
-                card.css('left', leftPosition);
-                
-                var cardPosition = card.position();
-                this.dimensions.topPositions[i] = cardPosition.top;
-            } 
-            //position subsequent rows
-            //determine the previous card in the column and position the next card accordingly.   
-            else {
-                var prevIndex = i - this.elementsPerRow;
-                var prevCard = $(this.troops[prevIndex]);
-                var prevCardPosition = prevCard.position();
-                var prevHeight = prevCard.height();
-                var thisCardTop = prevCard.height() + prevCardPosition.top;
-                var thisCardLeft = prevCardPosition.left;   
-                
-                card.css('top', thisCardTop);
-                card.css('left', thisCardLeft);
-                
-                var cardOffset = card.position();
-                this.dimensions.topPositions[i] = cardOffset.top;
+            var cardOffset = card.position();
+            this.dimensions.topPositions[i] = cardOffset.top;
             
             }    
         }//end for 
@@ -166,8 +167,7 @@ MarshalGrid.prototype.cards = function(){
 };//end cards
 
 
-//$(document).ready(function(){
-var cards = new MarshalGrid('#cards_wrapper', '.card', 'cards');
+var cards = new MarshalGrid('#cards_wrapper', '.card', 'cards', 10);
 cards.breakpoints = [250, 400, 600];
 cards.enlist();
 cards.cards();
@@ -175,9 +175,10 @@ cards.cards();
 var bricks = new MarshalGrid('#bricks_wrapper', '.brick', 'bricks');
 bricks.enlist();
 bricks.bricks();
-//});//end doc ready
 
 $(window).resize(function() {
     window.cards.cards();
     window.bricks.bricks();
 });
+
+
