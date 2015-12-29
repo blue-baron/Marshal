@@ -1,7 +1,4 @@
 /*jshint browser: true, devel: true, jquery: true*/
-// JavaScript Document
-
-//(function() {
  
 function MarshalGrid(container, element, formation, gutter){
     this.formation = formation || 'bricks';
@@ -89,7 +86,6 @@ MarshalGrid.prototype.bricks = function(mobile, medium, large) {
 			var containerWidth = this.container.width();
             var widthFactor = (containerWidth - 1) / currentRow.width;
             
-            
 			//calculate new width of each element within the row
 			var newWidth;
                 for(j = 0; j < currentRow.elements.length; j++) {
@@ -165,20 +161,5 @@ MarshalGrid.prototype.cards = function(){
         this.container.height(columnHeight);
       
 };//end cards
-
-
-var cards = new MarshalGrid('#cards_wrapper', '.card', 'cards', 10);
-cards.breakpoints = [250, 400, 600];
-cards.enlist();
-cards.cards();
-
-var bricks = new MarshalGrid('#bricks_wrapper', '.brick', 'bricks');
-bricks.enlist();
-bricks.bricks();
-
-$(window).resize(function() {
-    window.cards.cards();
-    window.bricks.bricks();
-});
 
 

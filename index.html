@@ -7,49 +7,71 @@
 </head>
 
 <body>
-<!--
-<h1>Marshal: Squares</h1>
-<div id="squares_wrapper">
-	<img class="square" src="images/IMG_1640_square.jpg" />
-	<img class="square" src="images/IMG_2364.jpg" />
-	<img class="square" src="images/IMG_2376.jpg" />
-    <img class="square" src="images/IMG_2364.jpg" />
-    <img class="square" src="images/IMG_1640_square.jpg" />
-</div>
--->
-    
+
 <h1>Marshal: Cards</h1>
 <div id="cards_wrapper">
-	<img class="card" src="images/IMG_1640_square.jpg" />
-	<img class="card" src="images/IMG_2376.jpg" />
-    <img class="card" src="images/IMG_2364.jpg" />
-	<img class="card" src="images/IMG_2364.jpg" />
-    <img class="card" src="images/IMG_1640_square.jpg" />
-    <img class="card" src="images/IMG_2364.jpg" />
-	<img class="card" src="images/IMG_1640_square.jpg" />
-    <img class="card" src="images/IMG_2376.jpg" />
-    <img class="card" src="images/IMG_2364.jpg" />
+	<img class="card" src="images/IMG_1013.jpg" />
+	<img class="card" src="images/IMG_1017.jpg" />
+	<img class="card" src="images/IMG_1033.jpg" />
+    <img class="card" src="images/IMG_1041.jpg" />
+	<img class="card" src="images/IMG_1725.jpg" />
+    <img class="card" src="images/IMG_1736.jpg" />
+    <img class="card" src="images/IMG_1741.jpg" />
+    <img class="card" src="images/IMG_1758.jpg" />
+    <img class="card" src="images/IMG_1820.jpg" />
+	<img class="card" src="images/IMG_1013.jpg" />
+    <img class="card" src="images/IMG_1017.jpg" />
     </div>
-  
+    
 <h1>Marshal: Bricks</h1>
 <div id="bricks_wrapper">
-	<img class="brick" src="images/IMG_1640_square.jpg" />
-	<img class="brick" src="images/IMG_2364.jpg" />
-	<img class="brick" src="images/IMG_2376.jpg" />
-    <img class="brick" src="images/IMG_2364.jpg" />
-	<img class="brick" src="images/IMG_2376.jpg" />
-    <img class="brick" src="images/IMG_2364.jpg" />
-    <img class="brick" src="images/IMG_2364.jpg" />
-    <img class="brick" src="images/IMG_1640_square.jpg" />
-    <img class="brick" src="images/IMG_2364.jpg" />
-	<img class="brick" src="images/IMG_2376.jpg" />
-    <img class="brick" src="images/IMG_2364.jpg" />
+	<img class="brick" src="images/IMG_1013.jpg" />
+	<img class="brick" src="images/IMG_1017.jpg" />
+	<img class="brick" src="images/IMG_1033.jpg" />
+    <img class="brick" src="images/IMG_1041.jpg" />
+	<img class="brick" src="images/IMG_1725.jpg" />
+    <img class="brick" src="images/IMG_1736.jpg" />
+    <img class="brick" src="images/IMG_1741.jpg" />
+    <img class="brick" src="images/IMG_1758.jpg" />
+    <img class="brick" src="images/IMG_1820.jpg" />
+	<img class="brick" src="images/IMG_1013.jpg" />
+    <img class="brick" src="images/IMG_1017.jpg" />
 </div>
+
 
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="js/marshal.js"></script>
 
-<script type="text/javascript">
+<script>
+$(window).load(function (){
+
+	//Initialize cards grid formation.
+	var cardGrid = new MarshalGrid('#cards_wrapper', '.card', 'cards', 30);
+	cardGrid.breakpoints = [600, 850, 1300];
+	cardGrid.enlist();
+	cardGrid.cards();
+	$('#cards_wrapper').css('visibility', 'visible');
+	
+	//Resize cards on window resize.
+	$(window).resize(function() {
+    cardGrid.cards();
+    }); 
+    
+    //Initialize bricks grid formation.
+var bricksGrid = new MarshalGrid('#bricks_wrapper', '.brick', 'bricks');
+	bricksGrid.breakpoints = [600, 850, 1300];
+	bricksGrid.enlist();
+	bricksGrid.bricks();
+	$('#bricks_wrapper').css('visibility', 'visible');
+	
+	//Resize bricks on window resize.
+	$(window).resize(function() {
+    bricksGrid.bricks();
+    });	
+      
+});//end window .load
+
+
 </script>
 </body>
 </html>

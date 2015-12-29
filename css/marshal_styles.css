@@ -1,19 +1,25 @@
-img {
-	float: left;
-	
-}
 #cards_wrapper,
 #bricks_wrapper {
-	position: relative;
     background: rgba(233,233,233,1.00);
-	width: 80%;
+	box-sizing: border-box; 
+	position: relative;
+	width: 100%;
 	margin: 0 auto;
 	padding: 0;
+	visibility: hidden;
 }
 h1 {
     clear: both;
     width: 100%;
 }
 .card {
-    position: absolute;
+    position: absolute !important;
+	box-sizing: border-box; 
+	text-align: center;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+}
+.brick {
+    float: left;   
 }
