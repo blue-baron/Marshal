@@ -134,6 +134,12 @@ MarshalGrid.prototype.bricks = function(mobile, medium, large) {
             
 		}//end for var i
     
+    //Set wrapper height
+    var lastBrick = $('.marshal_brick').last(),
+        lastBrickPos = lastBrick.position(),
+        wrapperHeight = lastBrickPos.top + lastBrick.height();
+    $('.bricks_wrapper').css('height', wrapperHeight);
+    
     //Change css visibility from hidden to visible
     $('.bricks_wrapper').css('visibility', 'visible');
     

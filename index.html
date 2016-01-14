@@ -58,7 +58,7 @@ $(window).load(function (){
     }); 
     
     //Initialize bricks grid formation.
-var bricksGrid = new MarshalGrid('#bricks_wrapper', '.brick', 'bricks');
+var bricksGrid = new MarshalGrid('#bricks_wrapper', '.brick', 'bricks', 20);
 	bricksGrid.breakpoints = [400, 600, 950];
 	bricksGrid.enlist();
 	bricksGrid.bricks();
