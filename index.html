@@ -10,7 +10,7 @@
 <body>
 
 <h1>Marshal: Cards</h1>
-<div id="cards_wrapper">
+<div id="cards_wrapper" style="visibility: hidden">
 	<img class="card" src="images/IMG_1013.jpg" alt="" />
 	<img class="card" src="images/IMG_1017.jpg" alt="" />
 	<img class="card" src="images/IMG_1033.jpg" alt="" />
@@ -25,7 +25,7 @@
     </div>
     
 <h1>Marshal: Bricks</h1>
-<div id="bricks_wrapper">
+<div id="bricks_wrapper" style="visibility: hidden">
 	<img class="brick" src="images/IMG_1013.jpg" alt="" />
 	<img class="brick" src="images/IMG_1017.jpg" alt="" />
 	<img class="brick" src="images/IMG_1033.jpg" alt="" />
@@ -42,7 +42,7 @@
 
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="js/marshal.js"></script>
-<!--
+
 <script>
 $(window).load(function (){
 
@@ -51,7 +51,6 @@ $(window).load(function (){
 	cardGrid.breakpoints = [400, 600, 950];
 	cardGrid.enlist();
 	cardGrid.cards();
-	$('#cards_wrapper').css('visibility', 'visible');
 	
 	//Resize cards on window resize.
 	$(window).resize(function() {
@@ -63,7 +62,6 @@ var bricksGrid = new MarshalGrid('#bricks_wrapper', '.brick', 'bricks');
 	bricksGrid.breakpoints = [400, 600, 950];
 	bricksGrid.enlist();
 	bricksGrid.bricks();
-	$('#bricks_wrapper').css('visibility', 'visible');
 	
 	//Resize bricks on window resize.
 	$(window).resize(function() {
@@ -74,7 +72,7 @@ var bricksGrid = new MarshalGrid('#bricks_wrapper', '.brick', 'bricks');
 
 
 </script>
--->
+
 
 </body>
 </html>

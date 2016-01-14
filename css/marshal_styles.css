@@ -1,4 +1,5 @@
-.marshal_wrapper {
+.cards_wrapper,
+.bricks_wrapper {
     background: rgba(233,233,233,1.00);
 	box-sizing: border-box; 
 	position: relative;

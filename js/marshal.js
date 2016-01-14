@@ -9,11 +9,12 @@ function MarshalGrid(container, element, formation, gutter){
  }
 
 MarshalGrid.prototype.enlist = function() {
-    //add class name to formation wrapper
-    this.container.addClass('marshal_wrapper');
+    var troopName = this.formation;
+    
+    //add class to formation wrapper
+    this.container.addClass(troopName + '_wrapper');
    
     //add class to elements
-    var troopName = this.formation;
     if (troopName.charAt(troopName.length-1) === 's') { 
         troopName = troopName.substr(0, troopName.length-1); 
     }
@@ -133,6 +134,10 @@ MarshalGrid.prototype.bricks = function(mobile, medium, large) {
             
 		}//end for var i
     
+    //Change css visibility from hidden to visible
+    $('.bricks_wrapper').css('visibility', 'visible');
+    
+	
 };//end bricks
 
 
@@ -193,31 +198,9 @@ MarshalGrid.prototype.cards = function(){
             }
         }
         this.container.height(columnHeight);
-      
+        
+        //Change css visibility from hidden to visible
+        $('.cards_wrapper').css('visibility', 'visible');
+    
 };//end cards
 
-
-
-//Initialize cards grid formation.
-	var cardGrid = new MarshalGrid('#cards_wrapper', '.card', 'cards', 10);
-	cardGrid.breakpoints = [400, 600, 950];
-	cardGrid.enlist();
-	cardGrid.cards();
-	$('#cards_wrapper').css('visibility', 'visible');
-	
-	//Resize cards on window resize.
-	$(window).resize(function() {
-    cardGrid.cards();
-    }); 
-    
-    //Initialize bricks grid formation.
-var bricksGrid = new MarshalGrid('#bricks_wrapper', '.brick', 'bricks', 20);
-	bricksGrid.breakpoints = [400, 600, 950];
-	bricksGrid.enlist();
-	bricksGrid.bricks();
-	$('#bricks_wrapper').css('visibility', 'visible');
-	
-	//Resize bricks on window resize.
-	$(window).resize(function() {
-    bricksGrid.bricks();
-    });
