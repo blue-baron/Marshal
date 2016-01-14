@@ -21,18 +21,18 @@ MarshalGrid.prototype.enlist = function() {
 
 MarshalGrid.prototype.setBreakpoints = function(width, smlVal, medVal, lrgVal, xLrgVal){
             
-    //determine value of a given variable depending on the width breakpoint
-    var variable;
+    //determine value of a current breakpoint depending on the given widths
+    var breakpoint;
     if (width < this.breakpoints[0]) {
-        variable = smlVal;
+        breakpoint = smlVal;
     } else if (width < this.breakpoints[1]) {
-        variable = medVal;
+        breakpoint = medVal;
     } else if (width < this.breakpoints[2]) {
-        variable = lrgVal;
+        breakpoint = lrgVal;
     } else {
-        variable = xLrgVal;	
+        breakpoint = xLrgVal;	
     }
-    return variable;
+    return breakpoint;
 };
 
 
@@ -82,26 +82,53 @@ MarshalGrid.prototype.bricks = function(mobile, medium, large) {
             currentRow.width = width;
 			
 			//determine factor to multiply width by
-			// - 1 is to compensate for rounding issues when new width is calculated
 			var containerWidth = this.container.width();
-            var widthFactor = (containerWidth - 1) / currentRow.width;
+            var widthFactor = (containerWidth) / currentRow.width;
             
-			//calculate new width of each element within the row
-			var newWidth;
+			//calculate new width and heights and position bricks accordingly
+			var newWidth,
+                leftPos = 0,
+                topPos;
                 for(j = 0; j < currentRow.elements.length; j++) {
-					if (this.elementsPerRow === 1) {
-                        $(currentRow.elements[j]).width(containerWidth) ;
+					//calculate new width of element
+                    var brick = currentRow.elements[j];
+                        if (this.elementsPerRow === 1) {
+                        $(brick).width(containerWidth) ;
 					} else {
-                        newWidth = currentRow.elements[j].calcWidth * widthFactor;
+                        newWidth = brick.calcWidth * widthFactor;
 				        if (currentRow.elements.length < perRow) {
                             newWidth = newWidth / perRow * currentRow.elements.length;
                             }
-                        $(currentRow.elements[j]).width(newWidth) ;
+                        $(brick).width(newWidth);
                         }
-				}//end for var j	
+                    //calculate new height of element based on recalculated width.
+                    currentRow.rowHeight = $(brick).height();
+                
+                    //absolute position left with jQuery position()
+                    $(brick).css('left', leftPos);
+                    leftPos += brick.width;
+                    
+                    //absolute position top with jQuery position()
+                    if (i === 0) {
+                        $(brick).css('top', 0);
+                        if (j === (currentRow.elements.length - 1)) {
+                            topPos = currentRow.rowHeight; 
+                        }
+                    } else {
+                        $(brick).css('top', topPos);
+                        if (j === (currentRow.elements.length - 1)) {
+                            topPos += currentRow.rowHeight;   
+                            
+                        }
+                    }
+                   
+                }//end for var j
+            
 		}//end for var i
+    
 };//end bricks
-	
+
+
 MarshalGrid.prototype.cards = function(){
      
     this.dimensions = { cardHeights: [], topPositions: [] };    
@@ -121,7 +148,7 @@ MarshalGrid.prototype.cards = function(){
         card.width(this.dimensions.cardWidth);
         this.dimensions.cardHeights[i] = card.height();
         
-        //postition first row jQuery position()
+        //postition first row with jQuery position()
         if (i < this.elementsPerRow) {
             var leftPosition = (this.dimensions.cardWidth + this.gutter) * i;
             card.css('top', 0);
@@ -161,5 +188,4 @@ MarshalGrid.prototype.cards = function(){
         this.container.height(columnHeight);
       
 };//end cards
-
 
