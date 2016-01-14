@@ -4,18 +4,21 @@ function MarshalGrid(container, element, formation, gutter){
     this.formation = formation || 'bricks';
     this.container = $(container);
     this.troops = $(element);
-    this.gutter = gutter || 0;
+    this.gutter = gutter || 10;
     this.breakpoints = [300, 500, 1000];
  }
 
 MarshalGrid.prototype.enlist = function() {
+    //add class name to formation wrapper
+    this.container.addClass('marshal_wrapper');
+   
     //add class to elements
-    var className = this.formation;
-    if (className.charAt(className.length-1) === 's') { 
-        className = className.substr(0, className.length-1); 
+    var troopName = this.formation;
+    if (troopName.charAt(troopName.length-1) === 's') { 
+        troopName = troopName.substr(0, troopName.length-1); 
     }
     for (var i = 0; i < this.troops.length; i++) {
-        this.troops[i].className += ' marshal_' + className;  
+        this.troops[i].className += ' marshal_' + troopName;  
     }//end for
 };
 
@@ -82,7 +85,11 @@ MarshalGrid.prototype.bricks = function(mobile, medium, large) {
             currentRow.width = width;
 			
 			//determine factor to multiply width by
-			var containerWidth = this.container.width();
+			var totalGutter = this.gutter * (this.elementsPerRow - 1);
+        //totalCardsWidth = this.container.width() - totalGutter;
+    //this.dimensions.cardWidth = Math.floor(totalCardsWidth / this.elementsPerRow);
+    
+            var containerWidth = this.container.width() - totalGutter;
             var widthFactor = (containerWidth) / currentRow.width;
             
 			//calculate new width and heights and position bricks accordingly
@@ -106,21 +113,21 @@ MarshalGrid.prototype.bricks = function(mobile, medium, large) {
                 
                     //absolute position left with jQuery position()
                     $(brick).css('left', leftPos);
-                    leftPos += brick.width;
+                    leftPos += (brick.width + this.gutter);
                     
                     //absolute position top with jQuery position()
                     if (i === 0) {
                         $(brick).css('top', 0);
                         if (j === (currentRow.elements.length - 1)) {
-                            topPos = currentRow.rowHeight; 
+                            topPos = (currentRow.rowHeight + this.gutter); 
                         }
                     } else {
                         $(brick).css('top', topPos);
                         if (j === (currentRow.elements.length - 1)) {
-                            topPos += currentRow.rowHeight;   
-                            
+                            topPos += (currentRow.rowHeight + this.gutter);   
                         }
                     }
+                    
                    
                 }//end for var j
             
@@ -189,3 +196,28 @@ MarshalGrid.prototype.cards = function(){
       
 };//end cards
 
+
+
+//Initialize cards grid formation.
+	var cardGrid = new MarshalGrid('#cards_wrapper', '.card', 'cards', 10);
+	cardGrid.breakpoints = [400, 600, 950];
+	cardGrid.enlist();
+	cardGrid.cards();
+	$('#cards_wrapper').css('visibility', 'visible');
+	
+	//Resize cards on window resize.
+	$(window).resize(function() {
+    cardGrid.cards();
+    }); 
+    
+    //Initialize bricks grid formation.
+var bricksGrid = new MarshalGrid('#bricks_wrapper', '.brick', 'bricks', 20);
+	bricksGrid.breakpoints = [400, 600, 950];
+	bricksGrid.enlist();
+	bricksGrid.bricks();
+	$('#bricks_wrapper').css('visibility', 'visible');
+	
+	//Resize bricks on window resize.
+	$(window).resize(function() {
+    bricksGrid.bricks();
+    });

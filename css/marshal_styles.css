@@ -1,18 +1,14 @@
-#cards_wrapper,
-#bricks_wrapper {
+.marshal_wrapper {
     background: rgba(233,233,233,1.00);
 	box-sizing: border-box; 
 	position: relative;
 	width: 100%;
 	margin: 0 auto;
 	padding: 0;
-	visibility: hidden;
+	visibility: hidden;/* hidden initially to stop fullsize images displaying */
 }
-h1 {
-    clear: both;
-    width: 100%;
-}
-.card, .brick {
+.card, 
+.brick {
     position: absolute !important;
 	box-sizing: border-box; 
 	text-align: center;
@@ -20,6 +16,3 @@ h1 {
 	margin: 0;
 	padding: 0;
 }
-/*.brick {
-   float: left;   
-}*/
