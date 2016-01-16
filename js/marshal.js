@@ -1,11 +1,11 @@
 /*jshint browser: true, devel: true, jquery: true*/
- 
-function MarshalGrid(container, element, formation, gutter){
-    this.formation = formation || 'bricks';
+
+function MarshalGrid(container, element, formation, gutter, breakpoints){
     this.container = $(container);
     this.troops = $(element);
-    this.gutter = gutter || 10;
-    this.breakpoints = [300, 500, 1000];
+    this.formation = formation;
+    this.gutter = gutter;
+    this.breakpoints = breakpoints;
  }
 
 MarshalGrid.prototype.enlist = function() {
@@ -210,3 +210,31 @@ MarshalGrid.prototype.cards = function(){
     
 };//end cards
 
+//Function to initialize a new grid
+var marshal = function(gridDetails){
+    var wrapper = gridDetails.wrapper,
+        troops = gridDetails.troops,
+        formation = gridDetails.formation || 'cards',
+        breakpoints = gridDetails.breakpoints || [350, 650, 950],
+        gutter = gridDetails.gutter || 10;
+    
+    var grid = new MarshalGrid(wrapper, troops, formation, gutter);
+    grid.breakpoints = breakpoints;
+    grid.enlist();
+	
+    if (formation === 'cards') {
+        grid.cards();   
+    } else {
+        grid.bricks();   
+    }
+    
+	//Resize cards on window resize.
+	$(window).resize(function() {
+        if (formation === 'cards') {
+            grid.cards();   
+        } else {
+            grid.bricks();   
+        }
+    });
+     
+};//end newGrid

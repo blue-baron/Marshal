@@ -8,22 +8,7 @@
 </head>
 
 <body>
-
-<h1>Marshal: Cards</h1>
-<div id="cards_wrapper" style="visibility: hidden">
-	<img class="card" src="images/IMG_1013.jpg" alt="" />
-	<img class="card" src="images/IMG_1017.jpg" alt="" />
-	<img class="card" src="images/IMG_1033.jpg" alt="" />
-    <img class="card" src="images/IMG_1041.jpg" alt="" />
-	<img class="card" src="images/IMG_1725.jpg" alt="" />
-    <img class="card" src="images/IMG_1736.jpg" alt="" />
-    <img class="card" src="images/IMG_1741.jpg" alt="" />
-    <img class="card" src="images/IMG_1758.jpg" alt="" />
-    <img class="card" src="images/IMG_1820.jpg" alt="" />
-	<img class="card" src="images/IMG_1013.jpg" alt="" />
-    <img class="card" src="images/IMG_1017.jpg" alt="" />
-    </div>
-    
+   
 <h1>Marshal: Bricks</h1>
 <div id="bricks_wrapper" style="visibility: hidden">
 	<img class="brick" src="images/IMG_1013.jpg" alt="" />
@@ -39,35 +24,43 @@
     <img class="brick" src="images/IMG_1017.jpg" alt="" />
 </div>
 
-
+<h1>Marshal: Cards</h1>
+<div id="cards_wrapper">
+	<img class="card" src="images/IMG_1013.jpg" alt="" />
+	<img class="card" src="images/IMG_1017.jpg" alt="" />
+	<img class="card" src="images/IMG_1033.jpg" alt="" />
+    <img class="card" src="images/IMG_1041.jpg" alt="" />
+	<img class="card" src="images/IMG_1725.jpg" alt="" />
+    <img class="card" src="images/IMG_1736.jpg" alt="" />
+    <img class="card" src="images/IMG_1741.jpg" alt="" />
+    <img class="card" src="images/IMG_1758.jpg" alt="" />
+    <img class="card" src="images/IMG_1820.jpg" alt="" />
+	<img class="card" src="images/IMG_1013.jpg" alt="" />
+    <img class="card" src="images/IMG_1017.jpg" alt="" />
+    </div>
+    
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="js/marshal.js"></script>
 
 <script>
+
 $(window).load(function (){
 
-	//Initialize cards grid formation.
-	var cardGrid = new MarshalGrid('#cards_wrapper', '.card', 'cards', 10);
-	cardGrid.breakpoints = [400, 600, 950];
-	cardGrid.enlist();
-	cardGrid.cards();
-	
-	//Resize cards on window resize.
-	$(window).resize(function() {
-    cardGrid.cards();
-    }); 
+    var newCards = marshal({
+        wrapper: '#cards_wrapper',
+        troops: '.card',
+        formation: 'cards',
+        breakpoints: [400, 750, 1050],
+        gutter: 20
+    });
+
+    var newBricks = marshal({
+        wrapper: '#bricks_wrapper',
+        troops: '.brick',
+        formation: 'bricks',
+    });
+
     
-    //Initialize bricks grid formation.
-var bricksGrid = new MarshalGrid('#bricks_wrapper', '.brick', 'bricks', 20);
-	bricksGrid.breakpoints = [400, 600, 950];
-	bricksGrid.enlist();
-	bricksGrid.bricks();
-	
-	//Resize bricks on window resize.
-	$(window).resize(function() {
-    bricksGrid.bricks();
-    });	
-      
 });//end window .load
 
 
