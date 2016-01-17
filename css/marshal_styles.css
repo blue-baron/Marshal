@@ -1,6 +1,6 @@
 .cards_wrapper,
 .bricks_wrapper {
-    box-sizing: border-box; 
+    box-sizing: border-box !important; 
 	position: relative;
 	width: 100%;
 	margin: 0 auto;
@@ -10,6 +10,7 @@
 .card, 
 .brick {
     position: absolute !important;
+    display: block;
 	box-sizing: border-box; 
 	text-align: center;
 	overflow: hidden;
