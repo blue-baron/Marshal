@@ -216,7 +216,7 @@ var marshal = function(gridDetails){
         troops = gridDetails.troops,
         formation = gridDetails.formation || 'cards',
         breakpoints = gridDetails.breakpoints || [350, 650, 950],
-        gutter = gridDetails.gutter || 10;
+        gutter = gridDetails.gutter || 0;
     
     var grid = new MarshalGrid(wrapper, troops, formation, gutter);
     grid.breakpoints = breakpoints;
